@@ -36,7 +36,7 @@ jobs:
     
     - name: Set environment variable
       id: set-env
-      uses: allenevans/set-env@v2
+      uses: allenevans/set-env@v2.0.0
       with:
         env: OLD_VER
         value: $(cd myapp && mvn help:evaluate -Dexpression=project.version | grep -E '^[0-9]+\.[0-9]+\.[0-9]+')
