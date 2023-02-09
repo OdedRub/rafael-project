@@ -34,12 +34,18 @@ jobs:
         distribution: 'temurin'
         cache: maven
     
-    - name: Define old version
-      id: old_ver
-      run: |
-        export OLD_VER=$(cd myapp && mvn help:evaluate -Dexpression=project.version | grep -E '^[0-9]+\.[0-9]+\.[0-9]+')
-        echo ${OLD_VER}
-        echo "::set-env name=OLD_VER::${OLD_VER}"
+    - name: Set environment variable
+        id: set-env
+        uses: actions/set-env@v2
+        with:
+          env: OLD_VER
+          value: $(cd myapp && mvn help:evaluate -Dexpression=project.version | grep -E '^[0-9]+\.[0-9]+\.[0-9]+')
+          
+    #- name: Define old version
+    #  id: old_ver
+    #  run: |
+    #    export OLD_VER=$(cd myapp && mvn help:evaluate -Dexpression=project.version | grep -E '^[0-9]+\.[0-9]+\.[0-9]+')
+    #    echo ${OLD_VER}
         
     - name: test versioning
       run: |
