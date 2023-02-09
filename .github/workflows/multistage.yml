@@ -21,7 +21,6 @@ jobs:
       packages: write
     outputs:
       jar_version: ${{ steps.bump.outputs.jar_version }}
-      OLD_VER: ${{ steps.old_ver.outputs.OLD_VER }}
       
     steps:
     - name: Checkout master
@@ -45,16 +44,16 @@ jobs:
       run: |
         echo ${OLD_VER}
         
-    - name: Bump version
-      id: bump_version
-      uses: christian-draeger/increment-semantic-version@1.1.0
-      with:
-        current-version: $(echo ${OLD_VER})
-        version-fragment: 'bug'  # bug (= patch), major, feature (= minor), alpha, beta, pre, rc
+    #- name: Bump version
+    #  id: bump_version
+    #  uses: christian-draeger/increment-semantic-version@1.1.0
+    #  with:
+    #    current-version: $(echo ${OLD_VER})
+    #    version-fragment: 'bug'  # bug (= patch), major, feature (= minor), alpha, beta, pre, rc
         
-    - name: Check versioning
-      run: | 
-        echo ${{ steps.bump_version.outputs.next-version }}
+    #- name: Check versioning
+    #  run: | 
+    #    echo ${{ steps.bump_version.outputs.next-version }}
       
     - name: Bump jar version
       id: bump
