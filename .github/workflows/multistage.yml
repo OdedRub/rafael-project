@@ -34,6 +34,12 @@ jobs:
         distribution: 'temurin'
         cache: maven
     
+    - name: Define old version
+      id: old_ver
+      run: |
+        OLD_VER=$(cd $POMPATH && mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+        echo $OLD_VER
+        
     - name: Bump version
       id: bump_version
       uses: christian-draeger/increment-semantic-version@1.1.0
