@@ -39,6 +39,7 @@ jobs:
       run: |
         export OLD_VER=$(cd myapp && mvn help:evaluate -Dexpression=project.version | grep -E '^[0-9]+\.[0-9]+\.[0-9]+')
         echo ${OLD_VER}
+        echo "::set-env name=OLD_VER::${OLD_VER}"
         
     - name: test versioning
       run: |
