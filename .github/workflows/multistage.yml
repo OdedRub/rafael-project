@@ -17,7 +17,7 @@ jobs:
 
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       packages: write
     outputs:
       jar_version: ${{ steps.bump.outputs.jar_version }}
@@ -44,8 +44,8 @@ jobs:
         NEW_VERSION="${parts[0]}.${parts[1]}.${bv}"
         echo "pom.xml at" $POMPATH "will be bumped from" $OLD_VERSION "to" $NEW_VERSION
         mvn -q versions:set -DnewVersion="${NEW_VERSION}" --file $POMPATH/pom.xml
-        echo ::set-output name=jar_version::${NEW_VERSION}
-        
+        echo "{jar_version}=${NEW_VERSION}" >> $GITHUB_OUTPUT
+#  echo ::set-output name=jar_version::${NEW_VERSION}      
     - name: Docker build
       id: build
       working-directory: ./myapp
