@@ -33,19 +33,12 @@ jobs:
         java-version: '8'
         distribution: 'temurin'
         cache: maven
-    
-    - name: Set environment variable
-      id: set-env
-      uses: allenevans/set-env@v2.0.0
-      with:
-        env: OLD_VER
-        value: $(cd myapp && mvn help:evaluate -Dexpression=project.version | grep -E '^[0-9]+\.[0-9]+\.[0-9]+')
-          
-    #- name: Define old version
-    #  id: old_ver
-    #  run: |
-    #    export OLD_VER=$(cd myapp && mvn help:evaluate -Dexpression=project.version | grep -E '^[0-9]+\.[0-9]+\.[0-9]+')
-    #    echo ${OLD_VER}
+
+    - name: Define old version
+      id: old_ver
+      run: |
+        echo "OLD_VER=${cd myapp && mvn help:evaluate -Dexpression=project.version | grep -E '^[0-9]+\.[0-9]+\.[0-9]+'}" >> $GITHUB_ENV
+        echo ${OLD_VER}
         
     - name: test versioning
       run: |
