@@ -43,14 +43,14 @@ jobs:
         
     - name: test versioning
       run: |
-        echo ${GITHUB_ENV}
+        echo ${OLD_VER}
         
     - name: Bump version
       id: bump_version
       uses: christian-draeger/increment-semantic-version@1.1.0
       with:
         #current-version: '1.0.0' # also accepted: 'v2.11.7-alpha.3' | '2.11.7-alpha3'
-        current-version: ${GITHUB_ENV}
+        current-version: ${OLD_VER}
         version-fragment: 'bug'  # bug (= patch), major, feature (= minor), alpha, beta, pre, rc
         
     - name: Check versioning
