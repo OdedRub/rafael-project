@@ -49,8 +49,7 @@ jobs:
       id: bump_version
       uses: christian-draeger/increment-semantic-version@1.1.0
       with:
-        old_version: ${OLD_ver}
-        current-version: $old_version
+        current-version: ${GITHUB_ENV}
         version-fragment: 'bug'  # bug (= patch), major, feature (= minor), alpha, beta, pre, rc
         
     - name: Check versioning
