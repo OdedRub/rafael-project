@@ -21,7 +21,7 @@ jobs:
       packages: write
     outputs:
       jar_version: ${{ steps.bump.outputs.jar_version }}
-      OLD_VER: $(cd $POMPATH && mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+      OLD_VER: ${{ steps.old_ver.outputs.OLD_VER }}
       
     steps:
     - name: Checkout master
@@ -37,7 +37,7 @@ jobs:
     - name: Define old version
       id: old_ver
       run: |
-        OLD_VER=$(cd $POMPATH && mvn help:evaluate -Dexpression=project.version -q -DforceStdout | awk -F '.' '{print $1"."$2"."$3}')
+        OLD_VER=$(cd $POMPATH && mvn help:evaluate -Dexpression=project.version -Dforcestdout | grep -E '^[0-9]+\.[0-9]+\.[0-9]+')
         echo $OLD_VER
         
     - name: Bump version
