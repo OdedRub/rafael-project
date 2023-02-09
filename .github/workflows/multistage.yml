@@ -37,7 +37,7 @@ jobs:
     - name: Define old version
       id: old_ver
       run: |
-        OLD_VER=$(cd $POMPATH && mvn help:evaluate -Dexpression=project.version -Dforcestdout | grep -E '^[0-9]+\.[0-9]+\.[0-9]+')
+        OLD_VER=$(cd $POMPATH && mvn help:evaluate -Dexpression=project.version | grep -E '^[0-9]+\.[0-9]+\.[0-9]+')
         echo $OLD_VER
         
     - name: Bump version
