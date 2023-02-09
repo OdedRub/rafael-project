@@ -5,6 +5,7 @@ ARG VER
 # RUN mkdir -p /app
 WORKDIR /app
 COPY pom.xml ./
+RUN mvn -B dependency:resolve
 COPY src/ ./src
 RUN mvn -B package
 
