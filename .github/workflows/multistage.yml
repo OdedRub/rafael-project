@@ -32,6 +32,11 @@ jobs:
         distribution: 'temurin'
         cache: maven
     
+    - name: Generate versions
+      uses: HardNorth/github-version-generate@v1.2.0
+      run: |
+        echo "current version is " $env.CURRENT_VERSION ", next version will be " $env.NEXT_VERSION "."
+        
     - name: Bump jar version
       id: bump
       run: |
