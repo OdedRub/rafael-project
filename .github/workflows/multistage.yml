@@ -33,13 +33,17 @@ jobs:
         distribution: 'temurin'
         cache: maven
     
-    - name: Generate versions
-      uses: HardNorth/github-version-generate@v1.2.0
-      
-    - name: Check versioning
-      run: |
-        echo "current version is " $env.CURRENT_VERSION ", next version will be " $env.NEXT_VERSION "."
+    - name: Bump version
+      id: bump_version
+      uses: christian-draeger/increment-semantic-version@1.1.0
+      with:
+        current-version: '1.0.0' # also accepted: 'v2.11.7-alpha.3' | '2.11.7-alpha3'
+        version-fragment: 'bug'  # bug (= patch), major, feature (= minor), alpha, beta, pre, rc
         
+    - name: Check versioning
+        run: echo ${{ steps.bump_version.outputs.next-version }}
+        # will print 2.12.0
+      
     - name: Bump jar version
       id: bump
       run: |
