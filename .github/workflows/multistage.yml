@@ -49,8 +49,8 @@ jobs:
       id: bump_version
       uses: christian-draeger/increment-semantic-version@1.1.0
       with:
-        #current-version: '1.0.0' # also accepted: 'v2.11.7-alpha.3' | '2.11.7-alpha3'
-        current-version: '${OLD_VER}'
+        old_version: ${OLD_ver}
+        current-version: $old_version
         version-fragment: 'bug'  # bug (= patch), major, feature (= minor), alpha, beta, pre, rc
         
     - name: Check versioning
