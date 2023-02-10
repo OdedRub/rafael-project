@@ -33,16 +33,16 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
-    #- name: Define old version
-    #  id: old_ver
-    #  run: |
-    #    old_version=$(cd myapp && mvn help:evaluate -Dexpression=project.version | grep -E '^[0-9]+\.[0-9]+\.[0-9]+')
-    #    echo "OLD_VER=${old_version}" >> $GITHUB_ENV
-    #    echo ${old_version}
+    - name: Define old version
+      id: old_ver
+      run: |
+        old_version=$(cd myapp && mvn help:evaluate -Dexpression=project.version | grep -E '^[0-9]+\.[0-9]+\.[0-9]+')
+        echo "OLD_VER=${old_version}" >> $GITHUB_ENV
+        echo ${old_version}
         
-    #- name: test versioning
-    #  run: |
-    #    echo ${OLD_VER}
+    - name: test versioning
+      run: |
+        echo "Current jar version is " ${OLD_VER}
         
     #- name: Bump version
     #  id: bump_version
@@ -55,38 +55,20 @@ jobs:
     #  run: | 
     #    echo ${{ steps.bump_version.outputs.next-version }}
       
-    #- name: Bump jar version
-    #  id: bump
-    #  run: |
-    #    POMPATH=myapp
-    #    OLD_VERSION=$(cd $POMPATH && mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
-    #    BUMP_MODE="none"
-    #    old="$OLD_VERSION"
-    #    parts=( ${old//./ } )
-    #    bv=$((parts[2] + 1))
-    #    NEW_VERSION="${parts[0]}.${parts[1]}.${bv}"
-    #    echo "pom.xml at" $POMPATH "will be bumped from" $OLD_VERSION "to" $NEW_VERSION
-    #    mvn -q versions:set -DnewVersion="${NEW_VERSION}" --file $POMPATH/pom.xml
-    #    echo "jar_version=${NEW_VERSION}" >> $GITHUB_OUTPUT
-    
-    - name: Set up NodeJS
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14'
-
-    - name: Install dependencies
-      run: |
-        cd myapp
-        npm install
-
-    - name: Bump version
+    - name: Bump jar version
       id: bump
       run: |
-        cd myapp
-        npm version patch
-        NEW_VERSION=$(cat package.json | grep version | awk -F: '{ print $2 }' | sed 's/[", ]//g')
+        POMPATH=myapp
+        OLD_VERSION=$(cd $POMPATH && mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+        BUMP_MODE="none"
+        old="$OLD_VERSION"
+        parts=( ${old//./ } )
+        bv=$((parts[2] + 1))
+        NEW_VERSION="${parts[0]}.${parts[1]}.${bv}"
+        echo "pom.xml at" $POMPATH "will be bumped from" $OLD_VERSION "to" $NEW_VERSION
+        mvn -q versions:set -DnewVersion="${NEW_VERSION}" --file $POMPATH/pom.xml
         echo "jar_version=${NEW_VERSION}" >> $GITHUB_OUTPUT
-     
+    
     - name: Docker build
       id: build
       working-directory: ./myapp
