@@ -82,7 +82,7 @@ jobs:
     
     - name: Docker push
       run: |
-        docker push odedruby/rafael-project:$jar_version
+        docker push odedruby/rafael-project:${{steps.bump.outputs.jar_version}}
       
     - name: Update POM file
       run: |
