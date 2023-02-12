@@ -72,7 +72,8 @@ jobs:
       id: build
       working-directory: ./myapp
       run: |
-        docker build --build-arg VER=${jar_version} -t odedruby/rafael-project:${jar_version} -f Multistage . 
+        echo $jar_version
+        docker build --build-arg VER=$(jar_version) -t odedruby/rafael-project:$(jar_version) -f Multistage . 
         
       #docker build --build-arg VER=${{steps.bump.outputs.jar_version}} -t odedruby/rafael-project:${{steps.bump.outputs.jar_version}} -f Multistage .
     - name: Login to DockerHub
