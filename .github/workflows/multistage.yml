@@ -19,8 +19,8 @@ jobs:
     permissions:
       contents: write
       packages: write
-    outputs:
-      jar_version: ${{ steps.bump.outputs.jar_version }}
+    #outputs:
+    #  jar_version: ${{ steps.bump.outputs.jar_version }}
       
     steps:
     - name: Checkout master
@@ -72,8 +72,9 @@ jobs:
       id: build
       working-directory: ./myapp
       run: |
-        docker build --build-arg VER=${{steps.bump.outputs.jar_version}} -t odedruby/rafael-project:${{steps.bump.outputs.jar_version}} -f Multistage . 
+        docker build --build-arg VER=$jar_version -t odedruby/rafael-project:$jar_version -f Multistage . 
         
+      #docker build --build-arg VER=${{steps.bump.outputs.jar_version}} -t odedruby/rafael-project:${{steps.bump.outputs.jar_version}} -f Multistage .
     - name: Login to DockerHub
       uses: docker/login-action@v2
       with:
@@ -82,7 +83,7 @@ jobs:
     
     - name: Docker push
       run: |
-        docker push odedruby/rafael-project:${{steps.bump.outputs.jar_version}}
+        docker push odedruby/rafael-project:$jar_version
       
     - name: Update POM file
       run: |
@@ -94,4 +95,4 @@ jobs:
         
     - name: Run container
       run: |
-        docker run odedruby/rafael-project:${{steps.bump.outputs.jar_version}}
+        docker run odedruby/rafael-project:$jar_version
