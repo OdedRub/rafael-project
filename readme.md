@@ -1,53 +1,25 @@
-A simple, minimal Maven example: hello world
+Java application with a multistage Dockerfile
 
-To create the files in this git repo we've already run mvn archetype:generate from http://maven.apache.org/guides/getting-started/maven-in-five-minutes.html
+step 1:
+Checkout from the master branch of the GitHub repository
 
-mvn archetype:generate -DgroupId=com.mycompany.app -DartifactId=my-app -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
-Now, to print "Hello World!", type either...
+step 2:
+Bump jar version by using a script 
 
-cd my-app
-mvn compile
-java -cp target/classes com.mycompany.app.App
-or...
+step 3:
+Build the docker image using a Dockerfile
 
-cd my-app
-mvn package
-java -cp target/my-app-1.0-SNAPSHOT.jar com.mycompany.app.App
-Running mvn clean will get us back to only the source Java and the pom.xml:
+step 4:
+Login to DockerHub 
 
-murphy:my-app pdurbin$ mvn clean --quiet
-murphy:my-app pdurbin$ ack -a -f
-pom.xml
-src/main/java/com/mycompany/app/App.java
-src/test/java/com/mycompany/app/AppTest.java
-Running mvn compile produces a class file:
+step 5:
+Push the image to the mentioned repository on DockerHub
 
-murphy:my-app pdurbin$ mvn compile --quiet
-murphy:my-app pdurbin$ ack -a -f
-pom.xml
-src/main/java/com/mycompany/app/App.java
-src/test/java/com/mycompany/app/AppTest.java
-target/classes/com/mycompany/app/App.class
-murphy:my-app pdurbin$ 
-murphy:my-app pdurbin$ java -cp target/classes com.mycompany.app.App
-Hello World!
-Running mvn package does a compile and creates the target directory, including a jar:
+step 6:
+Commit the changes of the pom.xml file back to the GitHub repository
 
-murphy:my-app pdurbin$ mvn clean --quiet
-murphy:my-app pdurbin$ mvn package > /dev/null
-murphy:my-app pdurbin$ ack -a -f
-pom.xml
-src/main/java/com/mycompany/app/App.java
-src/test/java/com/mycompany/app/AppTest.java
-target/classes/com/mycompany/app/App.class
-target/maven-archiver/pom.properties
-target/my-app-1.0-SNAPSHOT.jar
-target/surefire-reports/com.mycompany.app.AppTest.txt
-target/surefire-reports/TEST-com.mycompany.app.AppTest.xml
-target/test-classes/com/mycompany/app/AppTest.class
-murphy:my-app pdurbin$ 
-murphy:my-app pdurbin$ java -cp target/my-app-1.0-SNAPSHOT.jar com.mycompany.app.App
-Hello World!
-Running mvn clean compile exec:java requires http://mojo.codehaus.org/exec-maven-plugin/
+step 7:
+On a new job, login to DockerHub
 
-Running java -jar target/my-app-1.0-SNAPSHOT.jar requires http://maven.apache.org/plugins/maven-shade-plugin/
+step 8:
+Run the container using the mentioned image
