@@ -1,9 +1,17 @@
-# get jar file
+# Multistage dockerfile to package app with maven and run it
 
-
-FROM anapsix/alpine-java
-RUN adduser -D kepler-alien
-USER kepler-alien
+FROM maven:3.8.6-openjdk-8-slim as BUILDER
 ARG VER
-ADD /target/myapp-$VER.jar /home/myjar.jar
-CMD ["java","-jar","/home/myjar.jar"]
+WORKDIR /app
+COPY pom.xml ./
+RUN mvn -B dependency:resolve
+COPY src/ ./src
+RUN mvn -B package
+
+FROM openjdk:8-jre-slim
+ARG VER
+COPY --from=BUILDER /app/target/myapp-$VER.jar myapp.jar
+RUN chmod 777 myapp.jar
+RUN useradd -u 1000 kepler-alien
+USER kepler-alien
+CMD java -jar myapp.jar
