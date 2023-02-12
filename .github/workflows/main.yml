@@ -109,4 +109,4 @@ jobs:
             
       - name: Run container
         run: |
-          docker run odedruby/rafael-project:${{steps.bump.outputs.jar_version}}     
+          docker run odedruby/rafael-project:${{needs.build.outputs.jar_version}}     
