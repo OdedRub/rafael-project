@@ -1,25 +1,29 @@
-Java application with a multistage Dockerfile
+Introduction
 
-step 1:
-Checkout from the master branch of the GitHub repository
+	This workflow is used to automate the process of building and deploying a Java application using Maven and Docker. The workflow is triggered by a push event to the master branch or by a pull request to the master branch.
 
-step 2:
-Bump jar version by using a script 
 
-step 3:
-Build the docker image using a Dockerfile
+Environment
+	The workflow runs on ubuntu-latest and requires the following permissions: contents with write access and packages with write access.
 
-step 4:
-Login to DockerHub 
 
-step 5:
-Push the image to the mentioned repository on DockerHub
+Stages
+	The workflow consists of two stages: `build` and `run`.
 
-step 6:
-Commit the changes of the pom.xml file back to the GitHub repository
+Build
+	The `build` stage performs the following tasks:
 
-step 7:
-On a new job, login to DockerHub
+		1. Checkout the code from the master branch of the GitHub repository.
+		2. Set up JDK 8 and cache Maven dependencies.
+		3. Bump the version of the jar file inside the POM file.
+		4. Build a Docker image using the updated jar version as a build argument inside a multistaged-Dockerfile.
+		5. Login to DockerHub with saved secrets.
+		6. Push the Docker image to a given respository inDockerHub.
+		7. Update the POM file with the updated jar version.
 
-step 8:
-Run the container using the mentioned image
+Run
+	The `run` stage performs the following tasks:
+
+		1. Login to DockerHub.
+		2. Run the Docker container with the image built in the `build` stage.
+
