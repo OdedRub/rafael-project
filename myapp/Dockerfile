@@ -11,7 +11,6 @@ RUN mvn -B package
 FROM openjdk:8-jre-slim
 ARG VER
 COPY --from=BUILDER /app/target/myapp-$VER.jar myapp.jar
-#RUN chmod 777 myapp.jar
 RUN useradd -u 1000 kepler-alien
 USER kepler-alien
 CMD java -jar myapp.jar
