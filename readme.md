@@ -49,7 +49,8 @@ In order to get back home you must complete the following tasks:
     
     6. Once it’s running, we would come and pick you up immediately
 
-Bonus – do as much as possible from the above using Multistage Docker 
+Bonus – do as much as possible from the above using Multistage Docker.
+
 If you encounter any issues with these primitive technologies, we highly recommend using Google, we believe you’ll be able to get most of the answers from this tool.
 
 Good Luck!
