@@ -32,40 +32,18 @@ jobs:
         java-version: '8'
         distribution: 'temurin'
         cache: maven
-
-    - name: Define old version
-      id: old_ver
-      run: |
-        old_version=$(cd myapp && mvn help:evaluate -Dexpression=project.version | grep -E '^[0-9]+\.[0-9]+\.[0-9]+')
-        echo "OLD_VER=${old_version}" >> $GITHUB_ENV
-        
-    - name: Test versioning
-      run: |
-        echo "Current jar version is " ${OLD_VER}
-        
-    #- name: Bump version
-    #  id: bump_version
-    #  uses: christian-draeger/increment-semantic-version@1.1.0
-    #  with:
-    #    current-version: $(echo ${OLD_VER})
-    #    version-fragment: 'bug'  # bug (= patch), major, feature (= minor), alpha, beta, pre, rc
-        
-    #- name: Check versioning
-    #  run: | 
-    #    echo ${{ steps.bump_version.outputs.next-version }}
       
     - name: Bump jar version
       id: bump
       run: |
-        POMPATH=myapp
-        OLD_VERSION=$(cd $POMPATH && mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+        OLD_VERSION=$(cd myapp && mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
         BUMP_MODE="none"
         old="$OLD_VERSION"
         parts=( ${old//./ } )
         bv=$((parts[2] + 1))
         NEW_VERSION="${parts[0]}.${parts[1]}.${bv}"
-        echo "pom.xml at" $POMPATH "will be bumped from" $OLD_VERSION "to" $NEW_VERSION
-        mvn -q versions:set -DnewVersion="${NEW_VERSION}" --file $POMPATH/pom.xml
+        echo "pom.xml at myapp will be bumped from" $OLD_VERSION "to" $NEW_VERSION
+        mvn -q versions:set -DnewVersion="${NEW_VERSION}" --file myapp/pom.xml
         echo "jar_version=${NEW_VERSION}" >> $GITHUB_OUTPUT
     
     - name: Docker build
