@@ -26,7 +26,6 @@ The `build` stage performs the following tasks:
 		7. Update the POM file with the updated jar version.
 
 
-
 Run
 
 The `run` stage performs the following tasks:
