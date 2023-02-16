@@ -25,7 +25,6 @@ The `build` stage performs the following tasks:
 		6. Push the Docker image to a given respository inDockerHub.
 		7. Update the POM file with the updated jar version.
 
-
 Run
 
 The `run` stage performs the following tasks:
