@@ -37,7 +37,6 @@ jobs:
       id: bump
       run: |
         OLD_VERSION=$(cd myapp && mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
-        BUMP_MODE="none"
         old="$OLD_VERSION"
         parts=( ${old//./ } )
         bv=$((parts[2] + 1))
